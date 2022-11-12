@@ -10,7 +10,7 @@ DWORD firstKey, secondKey;
 
 LRESULT CALLBACK Hook(int nCode, WPARAM wParam, LPARAM lParam)
 {
-    BOOL fEatKeystroke = FALSE;
+    BOOL discall = FALSE;
 
     if (nCode == HC_ACTION)
     {
@@ -21,7 +21,7 @@ LRESULT CALLBACK Hook(int nCode, WPARAM wParam, LPARAM lParam)
             case WM_KEYUP:
             case WM_SYSKEYUP:
                 PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
-                if (fEatKeystroke = (p->vkCode == firstKey)) //redirect keys
+                if (discall = (p->vkCode == firstKey)) //redirect keys
                 {
                     cout << "[" << firstKey << "]" << " Hook called" << endl;
 
@@ -38,7 +38,7 @@ LRESULT CALLBACK Hook(int nCode, WPARAM wParam, LPARAM lParam)
                 break;
         }
     }
-    return(fEatKeystroke ? 1 : CallNextHookEx(0, nCode, wParam, lParam));
+    return(discall ? 1 : CallNextHookEx(0, nCode, wParam, lParam));
 }
 
 int main(int argc, char** argv)
